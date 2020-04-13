@@ -1,0 +1,33 @@
+{
+  "name": "Cloudflare",
+  "version": "1.0",
+  "slug": "cloudflare",
+  "description": "Manage Cloudflare DNS hosting, DDNS, and DNS challenge certificates",
+  "url": "https://github.com/steve-gombos/home-assistant-addons/cloudflare",
+  "arch": [ "armhf", "armv7", "aarch64", "amd64", "i386" ],
+  "startup": "services",
+  "boot": "auto",
+  "map": [ "ssl:rw" ],
+  "options": {
+    "lets_encrypt": {
+      "accept_terms": false,
+      "certfile": "fullchain.pem",
+      "keyfile": "privkey.pem"
+    },
+    "token": null,
+    "zone": null,
+    "domains": [ null ],
+    "seconds": 300
+  },
+  "schema": {
+    "lets_encrypt": {
+      "accept_terms": "bool",
+      "certfile": "str",
+      "keyfile": "str"
+    },
+    "token": "str",
+    "zone": "str",
+    "domains": [ "str" ],
+    "seconds": "int"
+  }
+}
