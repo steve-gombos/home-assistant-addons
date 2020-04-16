@@ -1,9 +1,7 @@
-# home-assistant-addons
-Home Assistant Addons Repository
+# Home Assistant Addons
+These are some addons that I use in my Home Assistant setup.
 
 ## Add-ons provided by this repository
 
-- **[Hello World](/hello-world/README.md)**
-  - Sample hello world addon.
 - **[Cloudflare](/cloudflare/README.md)**
   - Manage Cloudflare DNS hosting, DDNS, and DNS challenge certificates
