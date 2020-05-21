@@ -66,7 +66,4 @@ function check_a_records() {
 	fi	
 }
 
-CURRENT_IP=$(get_ip)
 export ZONE_ID=$(get_zone_id)
-
-check_a_records $CURRENT_IP

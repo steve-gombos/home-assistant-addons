@@ -40,20 +40,32 @@ if bashio::config.true 'lets_encrypt.accept_terms'; then
 	fi
 fi
 
+# Get initial IP
+CURRENT_IP=$(get_ip)
+
+# If there is an IP update records
+if bashio::var.has_value "$CURRENT_IP"; then
+	check_a_records $CURRENT_IP
+fi
+
 while true; do
 	REFRESH_IP=$(get_ip)
 
-	if bashio::var.equals "$CURRENT_IP" "$REFRESH_IP"; then
-		bashio::log.info "NO CHANGE: $REFRESH_IP"
-	else
-		bashio::log.info "CHANGE: $REFRESH_IP"
-		CURRENT_IP=$REFRESH_IP
-		check_a_records $REFRESH_IP
-	fi
+	if bashio::var.has_value "$REFRESH_IP"; then
+		if bashio::var.equals "$CURRENT_IP" "$REFRESH_IP"; then
+			bashio::log.info "NO CHANGE: $REFRESH_IP"
+		else
+			bashio::log.info "CHANGE: $REFRESH_IP"
+			CURRENT_IP=$REFRESH_IP
+			check_a_records $REFRESH_IP
+		fi
 
-	now="$(date +%s)"
-	if bashio::config.true 'lets_encrypt.accept_terms' && [ $((now - LE_UPDATE)) -ge 43200 ]; then
-		lets_encrypt_renew
+		now="$(date +%s)"
+		if bashio::config.true 'lets_encrypt.accept_terms' && [ $((now - LE_UPDATE)) -ge 43200 ]; then
+			lets_encrypt_renew
+		fi
+	else
+		bashio::log.info "NO IP FOUND"
 	fi
 
 	sleep "$WAIT_TIME"
