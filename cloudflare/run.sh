@@ -10,7 +10,9 @@ WAIT_TIME=$(bashio::config 'seconds')
 
 function lets_encrypt_renew() {
 	local domain_args=()
-	local domains=$(bashio::config 'domains')
+	local domains
+	
+	domains=$(bashio::config 'domains')
 
 	# Prepare domain for Let's Encrypt
 	for domain in ${domains}; do
@@ -27,17 +29,19 @@ if bashio::config.true 'lets_encrypt.accept_terms'; then
 	mkdir -p "${CERT_DIR}"
 	mkdir -p "${WORK_DIR}"
 	
+	# Clean up possible stale lock file
+	if [ -e "${WORK_DIR}/lock" ]; then
+        rm -f "${WORK_DIR}/lock"
+        bashio::log.warning "Reset dehydrated lock file"
+    fi
+
 	# Generate new certs
-	if [ ! -d "${CERT_DIR}/live" ]; then
-		# Create empty dehydrated config file so that this dir will be used for storage
-		touch "${WORK_DIR}/config"
-		
-		dehydrated --register --accept-terms --config "${WORK_DIR}/config"
-	elif [ -e "${WORK_DIR}/lock" ]; then
-		# Some user reports issue with lock files/cleanup
-		rm -rf "${WORK_DIR}/lock"
-		bashio::log.warning "Reset dehydrated lock file"
-	fi
+    if [ ! -d "${CERT_DIR}/live" ]; then
+        # Create empty dehydrated config file so that this dir will be used for storage
+        touch "${WORK_DIR}/config"
+
+        dehydrated --register --accept-terms --config "${WORK_DIR}/config"
+    fi
 fi
 
 # Get initial IP
