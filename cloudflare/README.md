@@ -43,6 +43,7 @@ token: sdfj-2131023-dslfjsd-12321
 zone: mydomain.com
 domains:
   - test.mydomain.com
+proxy: false
 seconds: 300
 ```
 
@@ -80,6 +81,10 @@ The Zone Name for your domain on Cloudflare.
 ### Option: `domains`
 
 A list of domains to be added or updated in your zone. An acceptable naming convention is `test.mydomain.com`.
+
+### Option: `proxy`
+
+Enables [Cloudflare Edge Proxy](https://support.cloudflare.com/hc/en-us/articles/205177068) for your domains. Optional, defaults to `false`.
 
 ### Option: `seconds`
 

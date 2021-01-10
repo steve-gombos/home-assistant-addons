@@ -3,6 +3,7 @@
 TOKEN=$(bashio::config 'token')
 ZONE=$(bashio::config 'zone')
 DOMAINS=$(bashio::config 'domains')
+PROXY=$(bashio::config 'proxy')
 
 bashio::log.info "Zone: $ZONE"
 
@@ -33,7 +34,7 @@ function create_a_record() {
 	curl -sX POST "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records" \
 		-H "Authorization: Bearer $TOKEN" \
 		-H "Content-Type: application/json" \
-		--data '{"type":"A","name":"'$domain'","content":"'$ip'","proxied":false}' -o /dev/null
+		--data '{"type":"A","name":"'$domain'","content":"'$ip'","proxied":'$PROXY'}' -o /dev/null
 
 	bashio::log.info "Created A Record - $domain"
 }
@@ -45,7 +46,7 @@ function update_a_record() {
 	curl -sX PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$a_record" \
 		-H "Authorization: Bearer $TOKEN" \
 		-H "Content-Type: application/json" \
-		--data '{"type":"A","name":"'$domain'","content":"'$ip'","proxied":false}' -o /dev/null
+		--data '{"type":"A","name":"'$domain'","content":"'$ip'","proxied":'$PROXY'}' -o /dev/null
 		
 	bashio::log.info "Updated A Record - $domain"
 }
