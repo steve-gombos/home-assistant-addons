@@ -1,6 +1,6 @@
 {
   "name": "Cloudflare",
-  "version": "1.3",
+  "version": "1.4",
   "slug": "cloudflare",
   "description": "Manage Cloudflare DNS hosting, DDNS, and DNS challenge certificates",
   "url": "https://github.com/steve-gombos/home-assistant-addons",
