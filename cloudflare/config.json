@@ -17,6 +17,7 @@
     "token": null,
     "zone": null,
     "domains": [ null ],
+    "proxy": false,
     "seconds": 300
   },
   "schema": {
@@ -28,6 +29,7 @@
     "token": "str",
     "zone": "str",
     "domains": [ "str" ],
+    "proxy": "bool?",
     "seconds": "int"
   }
 }
